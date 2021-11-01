@@ -11,6 +11,9 @@ import { AreaApoliceComponent } from './area-apolice/area-apolice.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BlockUIModule } from 'ng-block-ui';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
+import { NgxCurrencyModule } from "ngx-currency";
+
 
 @NgModule({
   declarations: [
@@ -27,6 +30,8 @@ import { BlockUIModule } from 'ng-block-ui';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxCurrencyModule,
+    NgxMaskModule.forRoot(),
     BlockUIModule.forRoot({
       delayStart: 500,
       delayStop: 500})

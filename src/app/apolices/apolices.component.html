@@ -9,16 +9,16 @@
               <th scope="col">Início da Vigência</th>
               <th scope="col">Fim da Vigência</th>
               <th scope="col">Placa do Veículo</th>
-              <th scope="col">Valor da Apólice (R$)</th>
+              <th scope="col">Valor da Apólice</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let apolice of apolices">
-              <td><a routerLink="/apolices/area-apolice">{{ apolice.numeroDaApolice }}</a></td>
-              <td>{{ apolice.inicioVigencia }}</td>
-              <td>{{ apolice.fimVigencia }}</td>
+              <td><a routerLink="/apolices/area-apolice/{{ apolice.numeroDaApolice }}">{{ apolice.numeroDaApolice }}</a></td>
+              <td>{{ apolice.inicioVigencia | date: 'dd/MM/yyyy'}}</td>
+              <td>{{ apolice.fimVigencia | date: 'dd/MM/yyyy'}}</td>
               <td>{{ apolice.placaVeiculo }}</td>
-              <td>{{ apolice.valorApolice }}</td>
+              <td>{{ apolice.valorApolice | currency:'BRL' }}</td>
             </tr>
           </tbody>
         </table>
@@ -51,43 +51,51 @@
         </div>
         <div class="modal-body">
           <div class="container">
-            <form>
-              <div class="row">
-                <div class="col-md-4">
-                  <label for="formGroupInput">CPF</label>
-                  <input type="text" class="form-control" id="formGroupInput">
+
+            <block-ui [delayStart]="500" [delayStop]="500">
+
+              <form [formGroup]="formularioApolice" (ngSubmit)="onSubmit()">
+                <div formGroupName="cliente">
+                  <div class="row p-2">
+                    <div class="col-md-4">
+                      <label for="formGroupInput">CPF</label>
+                      <input (blur)="buscarCPF($event.target.value)" mask="000.000.000-00" formControlName="cpf" type="text" class="form-control" id="formGroupInput">
+                    </div>
+                    <div class="col-md-8">
+                      <label for="formGroupInput">Nome</label>
+                      <input readonly formControlName="nome" type="text" class="form-control" id="formGroupInput">
+                    </div>
+                  </div>
                 </div>
-                <div class="col-md-8">
-                  <label for="formGroupInput">Nome</label>
-                  <input type="text" class="form-control" id="formGroupInput">
+                <div class="row p-2">
+                  <div class="col-md-4">
+                    <label for="formGroupInput">Início da Vigência</label>
+                    <input formControlName="inicioVigencia" type="date" class="form-control" id="formGroupInput">
+                  </div>
+                  <div class="col-md-4">
+                    <label for="formGroupInput">Fim da Vigência</label>
+                    <input formControlName="fimVigencia" type="date" class="form-control" id="formGroupInput">
+                  </div>
+                  <div class="col-md-4">
+                    <label for="formGroupInput">Placa do Veículo</label>
+                    <input formControlName="placaVeiculo" type="text" class="form-control" id="formGroupInput">
+                  </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <label for="formGroupInput">Início da Vigência</label>
-                  <input type="date" class="form-control" id="formGroupInput">
+                <div class="row p-2">
+                  <div class="col-md-6">
+                    <label for="formGroupInput">Valor da Apólice</label>
+                    <input formControlName="valorApolice" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" type="text" class="form-control" id="formGroupInput">
+                  </div>
                 </div>
-                <div class="col-md-4">
-                  <label for="formGroupInput">Fim da Vigência</label>
-                  <input type="date" class="form-control" id="formGroupInput">
+                <div class="modal-footer" style="margin-top: 30px;">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    (click)="limparFormulario()">Fechar</button>
+                  <button type="submit" class="btn btn-dark">Salvar</button>
                 </div>
-                <div class="col-md-4">
-                  <label for="formGroupInput">Placa do Veículo</label>
-                  <input type="text" class="form-control" id="formGroupInput">
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <label for="formGroupInput">Valor da Apólice</label>
-                  <input type="text" class="form-control" id="formGroupInput">
-                </div>
-              </div>
-              <div class="modal-footer" style="margin-top: 30px;">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                (click)="limparFormulario()">Fechar</button>
-                <button type="submit" class="btn btn-dark">Salvar</button>
-              </div>
-            </form>
+              </form>
+
+            </block-ui>
+
           </div>
         </div>
       </div>

@@ -1,44 +1,66 @@
 <section>
   <div class="container">
     <h2 class="display-5">Detalhe Apólice</h2>
-    <form>
-      <div class="row p-3">
-        <div class="col-md-4">
-          <label for="formGroupInput">CPF</label>
-          <input type="text" class="form-control" id="formGroupInput">
+
+    <form [formGroup]="formularioApolice" (ngSubmit)="onSubmit()">
+      <div formGroupName="cliente">
+        <div class="row p-3">
+          <div class="col-md-4">
+            <label for="formGroupInput">CPF</label>
+            <input readonly type="text" formControlName="cpf" class="form-control" id="formGroupInput">
+          </div>
+          <div class="col-md-8">
+            <label for="formGroupInput">Nome</label>
+            <input readonly type="text" formControlName="nome" class="form-control" id="formGroupInput">
+          </div>
         </div>
-        <div class="col-md-8">
-          <label for="formGroupInput">Nome</label>
-          <input type="text" class="form-control" id="formGroupInput">
+      </div>
+      <div class="row p-3">
+        <div class="col-md-3">
+          <label for="formGroupInput">Início da Vigência</label>
+          <input type="date" formControlName="inicioVigencia" class="form-control" id="formGroupInput">
+        </div>
+        <div class="col-md-3">
+          <label for="formGroupInput">Fim da Vigência</label>
+          <input type="date" formControlName="fimVigencia" class="form-control" id="formGroupInput">
+        </div>
+        <div class="col-md-3" >
+          <label for="formGroupInput">Apólice Vencida?</label>
+          <input readonly type="text" formControlName="apoliceVencida" class="form-control" [ngClass]="{'bg-danger': apoliceVencida}" id="formGroupInput">
+        </div>
+        <div class="col-md-3" *ngIf="!apoliceVencida">
+          <label for="formGroupInput">Dias até o vencimento</label>
+          <input [value]="apoliceVencida ? 'Sim' : 'Não'" readonly type="text" formControlName="diasParaVencerOuVencidos" class="form-control" id="formGroupInput">
+        </div>
+        <div class="col-md-3" *ngIf="apoliceVencida">
+          <label for="formGroupInput">Dias vencidos</label>
+          <input readonly type="text" formControlName="diasParaVencerOuVencidos" class="form-control" id="formGroupInput">
         </div>
       </div>
       <div class="row p-3">
         <div class="col-md-4">
-          <label for="formGroupInput">Início da Vigência</label>
-          <input type="date" class="form-control" id="formGroupInput">
-        </div>
-        <div class="col-md-4">
-          <label for="formGroupInput">Fim da Vigência</label>
-          <input type="date" class="form-control" id="formGroupInput">
+          <label for="formGroupInput">Número da Apólice</label>
+          <input readonly type="text" formControlName="numeroDaApolice" class="form-control" id="formGroupInput">
         </div>
         <div class="col-md-4">
           <label for="formGroupInput">Placa do Veículo</label>
-          <input type="text" class="form-control" id="formGroupInput">
+          <input type="text" formControlName="placaVeiculo" class="form-control" id="formGroupInput">
         </div>
-      </div>
-      <div class="row p-3">
-        <div class="col-md-12">
+        <div class="col-md-4">
           <label for="formGroupInput">Valor da Apólice</label>
-          <input type="text" class="form-control" id="formGroupInput">
+          <input type="text" formControlName="valorApolice" class="form-control" currencyMask
+            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" id="formGroupInput">
         </div>
       </div>
       <div class="row p-3">
         <div class="col-md-12 d-flex justify-content-end">
-          <button type="button" class="btn btn-secondary" style="margin-right: 20px;">Voltar</button>
-          <button type="button" class="btn btn-danger" style="width: 150px;margin-right: 20px;">Excluir</button>
-          <button type="button" class="btn btn-dark" style="width: 150px;">Salvar</button>
+          <button type="button" (click)="voltarListagemApolices()" class="btn btn-secondary"
+            style="margin-right: 20px;">Voltar</button>
+          <button type="button" class="btn btn-danger" (click)="excluirApolice()" style="width: 150px;margin-right: 20px;">Excluir</button>
+          <button type="submit" class="btn btn-dark" style="width: 150px;">Salvar</button>
         </div>
       </div>
     </form>
+
   </div>
 </section>

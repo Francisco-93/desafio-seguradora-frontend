@@ -10,8 +10,8 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'clientes', component: ClientesComponent },
   { path: 'apolices', component: ApolicesComponent },
-  { path: 'apolices/area-apolice', component: AreaApoliceComponent },
-  { path: 'clientes/area-cliente', component: AreaClienteComponent }
+  { path: 'apolices/area-apolice/:numeroDaApolice', component: AreaApoliceComponent },
+  { path: 'clientes/area-cliente/:id', component: AreaClienteComponent }
 ];
 
 @NgModule({

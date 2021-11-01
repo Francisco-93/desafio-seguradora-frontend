@@ -65,7 +65,7 @@ export class ClientesComponent implements OnInit {
     
     if(!this.validarForm()){
       this.clienteServico.inserirCliente(jsonCliente).subscribe(response => {
-        alert('Usuário cadastrado com sucesso!');
+        alert('Cliente cadastrado com sucesso!');
         location.reload();
       }, 
         error => {alert(error.error.causa)});
@@ -99,8 +99,11 @@ export class ClientesComponent implements OnInit {
   validarForm(){
     console.log(this.formularioCliente.controls.endereco.get('numero'). status)
     const status = 'INVALID';
-      if(this.validadorForm || this.formularioCliente.controls.cpf.status == status
-        || this.formularioCliente.controls.nome.status == status || this.formularioCliente.controls.endereco.get('numero'). status == status){
+      if(this.validadorForm || 
+        this.formularioCliente.controls.cpf.status == status || 
+        this.formularioCliente.controls.nome.status == status ||
+        this.formularioCliente.controls.endereco.status == status || 
+        this.formularioCliente.controls.endereco.get('numero').status == status){
         return true;
       }else{
         return false;

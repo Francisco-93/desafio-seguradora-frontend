@@ -35,7 +35,11 @@ export class ApolicesComponent implements OnInit {
       valorApolice: [null, Validators.required],
       apoliceVencida: [null, Validators.required],
       diasParaVencerOuVencidos: [null, Validators.required],
-      cpfCliente: [null, Validators.required]
+      cliente: this.formBuilder.group({
+        id: [null],
+        nome: [null, Validators.required],
+        cpf: [null, Validators.required]
+      })
     })
   }
 
@@ -54,35 +58,74 @@ export class ApolicesComponent implements OnInit {
     })
   }
 
-  onSubmit(){
+  onSubmit() {
     console.log(this.formularioApolice.controls);
+    console.log(JSON.stringify(this.formularioApolice.value));
     let jsonCliente = JSON.stringify(this.formularioApolice.value);
-    
-    if(true){
+
+    if (!this.validarForm()) {
       this.apoliceServico.inserirApolice(jsonCliente).subscribe(response => {
         alert('Apólice cadastrada com sucesso!');
         location.reload();
-      }, 
-        error => {alert(error.error.causa)});
-    }else{
+      },
+        error => {
+          alert(error.error.causa);
+        });
+    } else {
       alert('Todos os campos devem ser preenchidos.');
       console.log(!this.validarForm);
     }
   }
 
-  limparFormulario(){
+  limparFormulario() {
     this.formularioApolice.reset();
   }
 
-  validarForm(){
-    console.log(this.apolicesPaginadas.controls.endereco.get('numero'). status)
+
+  buscarCPF(cpf: string) {
+    this.blockUI.start('Carregando...');
+    cpf = this.formatarCpf(cpf);
+    this.apoliceServico.buscarClientePorCpf(cpf).subscribe(response => {
+      this.formularioApolice.get('cliente').patchValue({
+        id: response.id,
+        cpf: response.cpf,
+        nome: response.nome
+      })
+    }, error => {
+      if (error.error.causa === undefined) {
+        alert('Cliente não encontrado na base.');
+      } else {
+        alert(error.error.causa);
+      }
+      this.validadorForm = true;
+    })
+    this.blockUI.stop();
+  }
+
+  validarForm() {
+    console.log(this.formularioApolice.controls)
     const status = 'INVALID';
-      // if(this.validadorForm || this.apolicesPaginadas.controls.cpf.status == status
-      //   || this.apolicesPaginadas.controls.nome.status == status || this.apolicesPaginadas.controls.endereco.get('numero'). status == status){
-      //   return true;
-      // }else{
-      //   return false;
-      // }
+    if (
+      this.validadorForm ||
+      this.formularioApolice.controls.cliente.get('cpf').status == status ||
+      this.formularioApolice.controls.cliente.get('nome').status == status ||
+      this.formularioApolice.controls.inicioVigencia.status == status ||
+      this.formularioApolice.controls.fimVigencia.status == status ||
+      this.formularioApolice.controls.placaVeiculo.status == status ||
+      this.formularioApolice.controls.valorApolice.status == status
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+
+  }
+
+  formatarCpf(cpf: string) {
+    cpf = cpf.replace('.', '');
+    cpf = cpf.replace('.', '');
+    cpf = cpf.replace('-', '');
+    return cpf;
   }
 
 }

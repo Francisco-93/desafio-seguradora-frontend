@@ -13,7 +13,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let cliente of clientes">
-              <td><a routerLink="/clientes/area-cliente">{{ cliente.cpf }}</a></td>
+              <td><a routerLink="/clientes/area-cliente/{{ cliente.id }}">{{ cliente.cpf }}</a></td>
               <td>{{ cliente.nome }}</td>
               <td>{{ cliente.endereco.cidade }}</td>
               <td>{{ cliente.endereco.uf }}</td>
@@ -53,10 +53,10 @@
             <block-ui [delayStart]="500" [delayStop]="500">
 
               <form [formGroup]="formularioCliente" (ngSubmit)="onSubmit()">
-                <div class="row">
+                <div class="row p-1">
                   <div class="col-md-4">
                     <label for="formGroupInput">CPF</label>
-                    <input formControlName="cpf" type="text" class="form-control" id="formGroupInput">
+                    <input formControlName="cpf" mask="000.000.000-00" type="text" class="form-control" id="formGroupInput">
                   </div>
                   <div class="col-md-8">
                     <label for="formGroupInput">Nome</label>
@@ -64,33 +64,33 @@
                   </div>
                 </div>
                 <div formGroupName="endereco">
-                  <div class="row">
+                  <div class="row p-1">
                     <div class="col-md-2">
                       <label for="formGroupInput">CEP</label>
-                      <input formControlName="cep" type="text" class="form-control" id="formGroupInput"
+                      <input formControlName="cep" mask="00000-000" type="text" class="form-control" id="formGroupInput"
                         (blur)=consultaCep($event.target.value)>
                     </div>
                     <div class="col-md-8">
                       <label for="formGroupInput">Logradouro</label>
-                      <input formControlName="logradouro" type="text" class="form-control" id="formGroupInput">
+                      <input readonly formControlName="logradouro" type="text" class="form-control" id="formGroupInput">
                     </div>
                     <div class="col-md-2">
                       <label for="formGroupInput">Número</label>
                       <input formControlName="numero" type="text" class="form-control" id="formGroupInput">
                     </div>
                   </div>
-                  <div class="row">
+                  <div class="row p-1">
                     <div class="col-md-5">
                       <label for="formGroupInput">Bairro</label>
-                      <input formControlName="bairro" type="text" class="form-control" id="formGroupInput">
+                      <input readonly formControlName="bairro" type="text" class="form-control" id="formGroupInput">
                     </div>
                     <div class="col-md-5">
                       <label for="formGroupInput">Cidade</label>
-                      <input formControlName="cidade" type="text" class="form-control" id="formGroupInput">
+                      <input readonly formControlName="cidade" type="text" class="form-control" id="formGroupInput">
                     </div>
                     <div class="col-md-2">
                       <label for="formGroupInput">UF</label>
-                      <input formControlName="uf" type="text" class="form-control" id="formGroupInput">
+                      <input readonly formControlName="uf" type="text" class="form-control" id="formGroupInput">
                     </div>
                   </div>
                 </div>
