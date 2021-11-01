@@ -17,7 +17,6 @@ export class ClientesComponent implements OnInit {
   private paginaAtual: number;
   private ultimaPagina: number;
   private clientes: Cliente[];
-  private validadorForm: boolean = false;
 
   formularioCliente: FormGroup;
 
@@ -95,7 +94,6 @@ export class ClientesComponent implements OnInit {
       }
     }, error => {
       alert('CEP inválido');
-      this.validadorForm = true;
     })
     this.blockUI.stop();
   }
@@ -103,7 +101,7 @@ export class ClientesComponent implements OnInit {
   validarForm() {
     console.log(this.formularioCliente.controls.endereco.get('numero').status)
     const status = 'INVALID';
-    if (this.validadorForm ||
+    if (
       this.formularioCliente.controls.cpf.status == status ||
       this.formularioCliente.controls.nome.status == status ||
       this.formularioCliente.controls.endereco.status == status ||

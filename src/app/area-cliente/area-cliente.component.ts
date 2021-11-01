@@ -13,8 +13,6 @@ import { Subscription } from 'rxjs';
 
 export class AreaClienteComponent implements OnInit {
 
-  private validadorForm: boolean = false;
-
   formularioCliente: FormGroup;
 
   private idClienteAtivo: any;
@@ -91,7 +89,6 @@ export class AreaClienteComponent implements OnInit {
       }
     }, error => {
       alert('CEP inválido')
-      this.validadorForm = true;
     })
     this.blockUI.stop();
   }
@@ -99,7 +96,7 @@ export class AreaClienteComponent implements OnInit {
   validarForm() {
     console.log(this.formularioCliente.controls.endereco.get('numero').status)
     const status = 'INVALID';
-    if (this.validadorForm || this.formularioCliente.controls.cpf.status == status
+    if (this.formularioCliente.controls.cpf.status == status
       || this.formularioCliente.controls.nome.status == status || this.formularioCliente.controls.endereco.get('numero').status == status) {
       return true;
     } else {

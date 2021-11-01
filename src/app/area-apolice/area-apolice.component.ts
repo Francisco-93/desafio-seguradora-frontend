@@ -15,7 +15,6 @@ export class AreaApoliceComponent implements OnInit {
   private urlObserver: Subscription;
   private apoliceVencida: boolean;
   private numeroApoliceAtivo: any;
-  private validadorForm: boolean = false;
 
   formularioApolice: FormGroup;
 
@@ -109,7 +108,6 @@ export class AreaApoliceComponent implements OnInit {
     console.log(this.formularioApolice.controls)
     const status = 'INVALID';
     if (
-      this.validadorForm ||
       this.formularioApolice.controls.cliente.get('cpf').status == status ||
       this.formularioApolice.controls.cliente.get('nome').status == status ||
       this.formularioApolice.controls.inicioVigencia.status == status ||

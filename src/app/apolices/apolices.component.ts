@@ -16,7 +16,6 @@ export class ApolicesComponent implements OnInit {
   private paginaAtual: number;
   private ultimaPagina: number;
   private apolices: Apolice[] = [];
-  private validadorForm: boolean = false;
 
   formularioApolice: FormGroup;
 
@@ -97,7 +96,6 @@ export class ApolicesComponent implements OnInit {
       } else {
         alert(error.error.causa);
       }
-      this.validadorForm = true;
     })
     this.blockUI.stop();
   }
@@ -106,7 +104,6 @@ export class ApolicesComponent implements OnInit {
     console.log(this.formularioApolice.controls)
     const status = 'INVALID';
     if (
-      this.validadorForm ||
       this.formularioApolice.controls.cliente.get('cpf').status == status ||
       this.formularioApolice.controls.cliente.get('nome').status == status ||
       this.formularioApolice.controls.inicioVigencia.status == status ||
