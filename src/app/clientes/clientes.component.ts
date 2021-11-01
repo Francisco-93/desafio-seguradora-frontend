@@ -22,7 +22,7 @@ export class ClientesComponent implements OnInit {
   formularioCliente: FormGroup;
 
   @BlockUI() blockUI: NgBlockUI;
-  
+
   constructor(
     private clienteServico: ClienteServicoService,
     private formBuilder: FormBuilder,
@@ -33,13 +33,13 @@ export class ClientesComponent implements OnInit {
       nome: [null, Validators.required],
       cpf: [null, Validators.required],
       endereco: this.formBuilder.group({
-          id: [null],
-          cep: [null, Validators.required],
-          logradouro: [null, Validators.required],
-          bairro: [null, Validators.required],
-          uf: [null, Validators.required],
-          cidade: [null, Validators.required],
-          numero: [null, Validators.required]
+        id: [null],
+        cep: [null, Validators.required],
+        logradouro: [null, Validators.required],
+        bairro: [null, Validators.required],
+        uf: [null, Validators.required],
+        cidade: [null, Validators.required],
+        numero: [null, Validators.required]
       })
     })
   }
@@ -59,55 +59,59 @@ export class ClientesComponent implements OnInit {
     })
   }
 
-  onSubmit(){
+  onSubmit() {
     console.log(this.formularioCliente.controls);
     let jsonCliente = JSON.stringify(this.formularioCliente.value);
-    
-    if(!this.validarForm()){
+
+    if (!this.validarForm()) {
       this.clienteServico.inserirCliente(jsonCliente).subscribe(response => {
         alert('Cliente cadastrado com sucesso!');
         location.reload();
-      }, 
-        error => {alert(error.error.causa)});
-    }else{
+      },
+        error => { alert(error.error.causa) });
+    } else {
       alert('Todos os campos devem ser preenchidos.');
       console.log(!this.validarForm);
     }
   }
 
-  limparFormulario(){
+  limparFormulario() {
     this.formularioCliente.reset();
   }
 
-  consultaCep(cep: string){
+  consultaCep(cep: string) {
     this.blockUI.start('Carregando...');
     this.clienteServico.consultarCep(cep).subscribe(response => {
       this.formularioCliente.get('endereco').patchValue({
-          cep: response.cep,
-          logradouro: response.logradouro,
-          bairro: response.bairro,
-          uf: response.uf,
-          cidade: response.localidade
+        cep: response.cep,
+        logradouro: response.logradouro,
+        bairro: response.bairro,
+        uf: response.uf,
+        cidade: response.localidade
       });
+      if (this.formularioCliente.get('logradouro') === null) {
+        alert('CEP inválido');
+      }
+      console.log(response);
     }, error => {
-      alert('CEP inválido')
+      alert('CEP inválido');
       this.validadorForm = true;
     })
     this.blockUI.stop();
   }
 
-  validarForm(){
-    console.log(this.formularioCliente.controls.endereco.get('numero'). status)
+  validarForm() {
+    console.log(this.formularioCliente.controls.endereco.get('numero').status)
     const status = 'INVALID';
-      if(this.validadorForm || 
-        this.formularioCliente.controls.cpf.status == status || 
-        this.formularioCliente.controls.nome.status == status ||
-        this.formularioCliente.controls.endereco.status == status || 
-        this.formularioCliente.controls.endereco.get('numero').status == status){
-        return true;
-      }else{
-        return false;
-      }
+    if (this.validadorForm ||
+      this.formularioCliente.controls.cpf.status == status ||
+      this.formularioCliente.controls.nome.status == status ||
+      this.formularioCliente.controls.endereco.status == status ||
+      this.formularioCliente.controls.endereco.get('numero').status == status) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }
