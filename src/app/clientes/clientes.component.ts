@@ -89,10 +89,10 @@ export class ClientesComponent implements OnInit {
         uf: response.uf,
         cidade: response.localidade
       });
-      if (this.formularioCliente.get('logradouro') === null) {
-        alert('CEP inválido');
+      console.log(this.formularioCliente.controls.endereco.get('logradouro').status)
+      if (this.formularioCliente.controls.endereco.get('logradouro').status == 'INVALID') {
+        alert('CEP inválido')
       }
-      console.log(response);
     }, error => {
       alert('CEP inválido');
       this.validadorForm = true;
