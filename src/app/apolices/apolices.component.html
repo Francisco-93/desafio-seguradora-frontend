@@ -1,0 +1,96 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 d-flex justify-content-center">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Número da Apólice</th>
+              <th scope="col">Início da Vigência</th>
+              <th scope="col">Fim da Vigência</th>
+              <th scope="col">Placa do Veículo</th>
+              <th scope="col">Valor da Apólice (R$)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let apolice of apolices">
+              <td><a routerLink="/apolices/area-apolice">{{ apolice.numeroDaApolice }}</a></td>
+              <td>{{ apolice.inicioVigencia }}</td>
+              <td>{{ apolice.fimVigencia }}</td>
+              <td>{{ apolice.placaVeiculo }}</td>
+              <td>{{ apolice.valorApolice }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="d-flex justify-content-center">
+        <a class="page-link text-dark" style="cursor: pointer;"
+          (click)="listarApolicePaginado(paginaAtual-2)">Anterior</a>
+        <span class="m-2">{{ paginaAtual }} de {{ ultimaPagina }}</span>
+        <a class="page-link text-dark" *ngIf="paginaAtual != ultimaPagina" style="cursor: pointer;"
+          (click)="listarApolicePaginado(paginaAtual)">Próximo</a>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 d-flex justify-content-end">
+        <i class="fas fa-plus fa-3x" data-toggle="modal" data-target=".bd-example-modal-lg"
+          style="cursor: pointer;"></i>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Cadastrar Apólice</h5>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <form>
+              <div class="row">
+                <div class="col-md-4">
+                  <label for="formGroupInput">CPF</label>
+                  <input type="text" class="form-control" id="formGroupInput">
+                </div>
+                <div class="col-md-8">
+                  <label for="formGroupInput">Nome</label>
+                  <input type="text" class="form-control" id="formGroupInput">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <label for="formGroupInput">Início da Vigência</label>
+                  <input type="date" class="form-control" id="formGroupInput">
+                </div>
+                <div class="col-md-4">
+                  <label for="formGroupInput">Fim da Vigência</label>
+                  <input type="date" class="form-control" id="formGroupInput">
+                </div>
+                <div class="col-md-4">
+                  <label for="formGroupInput">Placa do Veículo</label>
+                  <input type="text" class="form-control" id="formGroupInput">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <label for="formGroupInput">Valor da Apólice</label>
+                  <input type="text" class="form-control" id="formGroupInput">
+                </div>
+              </div>
+              <div class="modal-footer" style="margin-top: 30px;">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                (click)="limparFormulario()">Fechar</button>
+                <button type="submit" class="btn btn-dark">Salvar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

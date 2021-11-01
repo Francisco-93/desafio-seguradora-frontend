@@ -3,14 +3,33 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+import { ClientesComponent } from './clientes/clientes.component';
+import { ApolicesComponent } from './apolices/apolices.component';
+import { AreaClienteComponent } from './area-cliente/area-cliente.component';
+import { AreaApoliceComponent } from './area-apolice/area-apolice.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BlockUIModule } from 'ng-block-ui';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    ClientesComponent,
+    ApolicesComponent,
+    AreaClienteComponent,
+    AreaApoliceComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BlockUIModule.forRoot({
+      delayStart: 500,
+      delayStop: 500})
   ],
   providers: [],
   bootstrap: [AppComponent]

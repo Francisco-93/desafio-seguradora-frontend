@@ -1,0 +1,111 @@
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 d-flex justify-content-center">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">CPF</th>
+              <th scope="col">Nome</th>
+              <th scope="col">Cidade</th>
+              <th scope="col">UF</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cliente of clientes">
+              <td><a routerLink="/clientes/area-cliente">{{ cliente.cpf }}</a></td>
+              <td>{{ cliente.nome }}</td>
+              <td>{{ cliente.endereco.cidade }}</td>
+              <td>{{ cliente.endereco.uf }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="d-flex justify-content-center">
+        <a class="page-link text-dark" style="cursor: pointer;"
+          (click)="listarClientesPaginado(paginaAtual-2)">Anterior</a>
+        <span class="m-2">{{ paginaAtual }} de {{ ultimaPagina }}</span>
+        <a class="page-link text-dark" *ngIf="paginaAtual != ultimaPagina" style="cursor: pointer;"
+          (click)="listarClientesPaginado(paginaAtual)">Próximo</a>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 d-flex justify-content-end">
+        <i class="fas fa-plus fa-3x" data-toggle="modal" data-target=".bd-example-modal-lg"
+          style="cursor: pointer;"></i>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Cadastrar Cliente</h5>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+
+            <block-ui [delayStart]="500" [delayStop]="500">
+
+              <form [formGroup]="formularioCliente" (ngSubmit)="onSubmit()">
+                <div class="row">
+                  <div class="col-md-4">
+                    <label for="formGroupInput">CPF</label>
+                    <input formControlName="cpf" type="text" class="form-control" id="formGroupInput">
+                  </div>
+                  <div class="col-md-8">
+                    <label for="formGroupInput">Nome</label>
+                    <input formControlName="nome" type="text" class="form-control" id="formGroupInput">
+                  </div>
+                </div>
+                <div formGroupName="endereco">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <label for="formGroupInput">CEP</label>
+                      <input formControlName="cep" type="text" class="form-control" id="formGroupInput"
+                        (blur)=consultaCep($event.target.value)>
+                    </div>
+                    <div class="col-md-8">
+                      <label for="formGroupInput">Logradouro</label>
+                      <input formControlName="logradouro" type="text" class="form-control" id="formGroupInput">
+                    </div>
+                    <div class="col-md-2">
+                      <label for="formGroupInput">Número</label>
+                      <input formControlName="numero" type="text" class="form-control" id="formGroupInput">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-5">
+                      <label for="formGroupInput">Bairro</label>
+                      <input formControlName="bairro" type="text" class="form-control" id="formGroupInput">
+                    </div>
+                    <div class="col-md-5">
+                      <label for="formGroupInput">Cidade</label>
+                      <input formControlName="cidade" type="text" class="form-control" id="formGroupInput">
+                    </div>
+                    <div class="col-md-2">
+                      <label for="formGroupInput">UF</label>
+                      <input formControlName="uf" type="text" class="form-control" id="formGroupInput">
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer" style="margin-top: 30px;">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    (click)="limparFormulario()">Fechar</button>
+                  <button type="submit" class="btn btn-dark">Salvar</button>
+                </div>
+              </form>
+
+            </block-ui>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
