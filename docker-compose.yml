@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  seguradora-gold:
+    image: seguradora-gold
+    build: .
+    ports:
+      - 4200:4200
