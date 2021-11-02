@@ -1,27 +1,64 @@
-# SeguradoraGoldFrontend
+# Seguradora Gold - Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.2.
+## Desafio Técnico Equiplano Sistemas
 
-## Development server
+Esta aplicação consiste em um mini sistema gerenciador de apólices de seguros
+e seus respectivos clientes.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Trata-se de um relacionamento entre Clientes e Apólices, onde um Cliente pode ter
+muitas Apólices e uma Apólice pode ter somente um Cliente.
+ 
+##### Como rodar localmente essa aplicação:
 
-## Code scaffolding
+* Na raiz do projeto digite os seguintes comandos:
+> docker build -t seguradora-gold .
+>
+> docker run -p 4200:4200 seguradora-gold
+>
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+##### Navegação sugerida do sistema
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+* Criar um cliente
+* Criar uma apólice vinculando à um cliente já existente na base
 
-## Running unit tests
+##### Observações
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Não é possível excluir um cliente vinculado à uma ou mais Apólices, para isso é necessário que seja feito primeiramente a exclusão das Apólices vinculadas. 
+Somente após isso o Cliente poderá ser excluído.
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+##### Detalhes importantes
 
-## Further help
+Para inserir os registros no sistema procure um botão com sinal ' + '.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+![Adicionar registro.](/images/A1.png)
+
+Na modal de cadastro de cliente, o campo CEP está programado para autocompletar os demais campos referentes à endereço.
+
+![Adicionar registro.](/images/A2.png)
+
+Na modal de cadastro de apólice, o campo CPF está prgramado para autocompletar o nome do cliente, o qual será vinculado à apólice. Para isso, é necessário que o cliente já esteja cadastrado na base de dados.
+
+![Adicionar registro.](/images/A3.png)
+
+### Endpoints API
+
+#### Cliente:   
+
+* localhost:8080/clientes GET , POST , PUT
+* localhost:8080/clientes/{id} GET , DELETE
+* localhost:8080/clientes/cpf/{cpf} GET
+* localhost:8080/clientes/page GET
+
+#### Apólice:   
+
+* localhost:8080/apolices GET , POST , PUT
+* localhost:8080/apolices/{id} GET , DELETE
+* localhost:8080/apolices/cliente/{idCliente} GET 
+* localhost:8080/apolices/cliente/cpf/{cpfCliente} GET
+* localhost:8080/apolices/page GET
+
+#### CEP Controller:   
+
+* localhost:8080/cep/{cep} GET
