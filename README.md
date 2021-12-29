@@ -1,6 +1,6 @@
 # Seguradora Gold - Frontend
 
-## Desafio Técnico Equiplano Sistemas
+## Desafio Técnico
 
 Esta aplicação consiste em um mini sistema gerenciador de apólices de seguros
 e seus respectivos clientes.
